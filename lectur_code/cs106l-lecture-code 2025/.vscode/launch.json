@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run C++ file",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/main.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "miDebuggerPath": "D:/codeing sorfware/vscode C++/msys64/ucrt64/bin/gdb.exe",
+            "preLaunchTask": "build active file"
+        }
+    ]
+}

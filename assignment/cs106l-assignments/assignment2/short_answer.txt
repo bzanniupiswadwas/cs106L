@@ -1,0 +1,25 @@
+Before submitting this file, make sure that there are no more TODO
+placeholders remaining in the file (and remove this comment too).
+
+Marriage Pact
+-------------
+
+Q1. It is your choice to use either an ordered or unordered set. In a few sentences, what are some of the tradeoffs between the two? Additionally, please give an example (that has not been shown in lecture) of a valid hash function that could be used to hash student names for an unordered set.
+A1. TODO
+std::set 基于红黑树，插入/查找为 O(log n)，元素有序，不支持哈希。
+std::unordered_set 基于哈希表，平均 O(1) 插入/查找，但最坏 O(n)，无序，需要定义哈希函数。
+下面是可以用于无需集合的hesh的哈希函数的例子：
+struct NameHash {
+    size_t operator()(const std::string& name) const {
+        size_t hash = 0;
+        for (char c : name) {
+            hash = hash * 31 + std::tolower(c);
+        }
+        return hash;
+    }
+};
+Q2. Note that we are saving pointers to names in the queue, not names themselves. Why might this be desired in this problem? What happens if the original set where the names are stored goes out of scope and the pointers are referenced?
+A2. TODO
+省内存、省拷贝：只存 8 字节指针，避免复制整串。
+生命期安全：原 set 在 main 里一直活着，队列用完才析构，指针始终有效。
+若 set 提前出作用域，指针变“悬空”，再解引用就是 UB（崩溃或脏数据）。

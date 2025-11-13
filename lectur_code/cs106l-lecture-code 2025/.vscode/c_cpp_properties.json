@@ -1,0 +1,16 @@
+{
+  "configurations": [
+    {
+      "name": "Windows-UCRT64",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [],
+      "compilerPath": "D:/codeing sorfware/vscode C++/msys64/ucrt64/bin/g++.exe",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "gcc-x64"
+    }
+  ],
+  "version": 4
+}

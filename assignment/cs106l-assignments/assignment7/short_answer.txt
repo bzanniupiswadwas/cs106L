@@ -1,0 +1,18 @@
+Before submitting this file, make sure that there are no more TODO
+placeholders remaining in the file (and remove this comment too).
+
+Unique Pointer
+--------------
+
+Q1. List one or two benefits of using RAII to manage memory instead manually calling `new` and `delete`.
+自动资源管理：RAII（Resource Acquisition Is Initialization）确保对象在构造时获取资源（如动态内存），在析构时自动释放。即使发生异常，析构函数也会被调用，从而避免内存泄漏。
+代码更安全、简洁：无需手动配对 new/delete，减少因忘记释放、重复释放或提前返回导致的错误。
+
+Q2. When implementing move semantics for a `unique_ptr`, for example in the move constructor `unique_ptr(unique_ptr&& other)`, it is essential that we set the underlying pointer of the `other` parameter to `nullptr` before exiting the function. Explain in your own words what problem would arise if we did not.
+在实现 unique_ptr 的移动构造函数时，如果不将 other 的底层指针置为 nullptr，那么原对象和新对象都会持有指向同一块内存的指针。当这两个对象先后析构时，会多次对同一地址执行 delete，导致重复释放内存，引发未定义行为（如程序崩溃或数据损坏），因此必须将 other.uptr 设为 nullptr 以保证资源的唯一所有权。
+
+Q3. This method of recursive deallocation through RAII works great for small lists, but may pose a problem for longer lists. Why? Hint: what is the limit for how "deep" a recursive function's call stack can grow?
+虽然通过 RAII 实现的递归析构对小链表非常简洁有效，但在处理很长的链表时可能导致栈溢出。这是因为每个节点的析构会递归触发下一个节点的析构，形成深度等于链表长度的函数调用栈，而系统对调用栈的深度有限制，一旦超出就会导致程序崩溃。
+
+Q4. What does `std::move` do in this context? Why is it safe to use `std::move` and move semantics here?
+std::move 的作用是将一个左值（如 head）显式转换为右值引用，从而启用移动语义，使资源能够高效转移而非复制。由于 unique_ptr 禁用了拷贝，只能通过移动来转移所有权，而我们在链表构建过程中明确知道原指针在移动后不会再被使用，因此使用 std::move 是安全且符合独占所有权语义的。
